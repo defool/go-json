@@ -312,7 +312,7 @@ func Run(ctx *encoder.RuntimeContext, b []byte, codeSet *encoder.OpcodeSet) ([]b
 		case encoder.OpSlice:
 			p := load(ctxptr, code.Idx)
 			slice := ptrToSlice(p)
-			if p == 0 || slice.Data == nil {
+			if !ctx.Option.NoNullSlice && (p == 0 || slice.Data == nil) {
 				b = appendNullComma(ctx, b)
 				code = code.End.Next
 				break

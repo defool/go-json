@@ -23,6 +23,7 @@ type Option struct {
 	ColorScheme *ColorScheme
 	Context     context.Context
 	DebugOut    io.Writer
+	NoNullSlice bool
 }
 
 type EncodeFormat struct {

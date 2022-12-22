@@ -6,6 +6,12 @@ import (
 	"unicode"
 )
 
+var defaultJsonTagNaming func(string) string
+
+func SetDefaultJsonTagNaming(f func(string) string) {
+	defaultJsonTagNaming = f
+}
+
 func getTag(field reflect.StructField) string {
 	return field.Tag.Get("json")
 }
@@ -67,6 +73,9 @@ func isValidTag(s string) bool {
 
 func StructTagFromField(field reflect.StructField) *StructTag {
 	keyName := field.Name
+	if defaultJsonTagNaming != nil {
+		keyName = defaultJsonTagNaming(field.Name)
+	}
 	tag := getTag(field)
 	st := &StructTag{Field: field}
 	opts := strings.Split(tag, ",")

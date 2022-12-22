@@ -5,6 +5,7 @@ import (
 
 	"github.com/goccy/go-json/internal/decoder"
 	"github.com/goccy/go-json/internal/encoder"
+	"github.com/goccy/go-json/internal/runtime"
 )
 
 type EncodeOption = encoder.Option
@@ -41,6 +42,13 @@ func Debug() EncodeOptionFunc {
 	}
 }
 
+// NoNullSlice encode nil slice to empty array instand of null.
+func NoNullSlice() EncodeOptionFunc {
+	return func(opt *EncodeOption) {
+		opt.NoNullSlice = true
+	}
+}
+
 // DebugWith sets the destination to write debug messages.
 func DebugWith(w io.Writer) EncodeOptionFunc {
 	return func(opt *EncodeOption) {
@@ -69,4 +77,8 @@ func DecodeFieldPriorityFirstWin() DecodeOptionFunc {
 	return func(opt *DecodeOption) {
 		opt.Flags |= decoder.FirstWinOption
 	}
+}
+
+func SetDefaultJsonTagNaming(f func(string) string) {
+	runtime.SetDefaultJsonTagNaming(f)
 }
