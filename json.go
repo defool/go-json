@@ -168,7 +168,7 @@ type UnmarshalerContext interface {
 // an infinite recursion.
 //
 func Marshal(v interface{}) ([]byte, error) {
-	return MarshalWithOption(v)
+	return MarshalWithOption(v, NoNullSlice())
 }
 
 // MarshalNoEscape returns the JSON encoding of v and doesn't escape v.

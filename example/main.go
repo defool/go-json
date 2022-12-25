@@ -2,29 +2,21 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/defool/go-json"
 )
 
-type abc struct {
-	ValAbc string
-	Arr    []string
-
-	Obj *abc
-}
-
-// fieldNameCase 默认小驼峰命名方式
-func fieldNameCase(name string) string {
-	if len(name) == 0 {
-		return name
-	}
-	return strings.ToLower(name[:1]) + name[1:]
+type Example struct {
+	FieldName string
+	Slice     []string
 }
 
 func main() {
-	json.SetDefaultJsonTagNaming(fieldNameCase)
-	val := &abc{ValAbc: "111", Arr: nil}
-	bs, err := json.MarshalWithOption(val, json.NoNullSlice())
-	fmt.Println("out", string(bs), err) // "valAbc":"111","arr":[]}
+	val := &Example{FieldName: "111", Slice: nil}
+	bs, err := json.Marshal(val)
+	fmt.Println("out is", string(bs), err) // out is {"fieldName":"111","slice":[]}
+
+	val2 := &Example{}
+	json.Unmarshal(bs, val2)
+	fmt.Println("data is", val2) // data is &{111 []}
 }

@@ -6,7 +6,13 @@ import (
 	"unicode"
 )
 
-var defaultJsonTagNaming func(string) string
+// default is camelCase
+var defaultJsonTagNaming = func(name string) string {
+	if len(name) == 0 {
+		return name
+	}
+	return strings.ToLower(name[:1]) + name[1:]
+}
 
 func SetDefaultJsonTagNaming(f func(string) string) {
 	defaultJsonTagNaming = f
