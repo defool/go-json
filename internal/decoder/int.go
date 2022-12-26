@@ -172,6 +172,18 @@ func (d *intDecoder) decodeByte(buf []byte, cursor int64) ([]byte, int64, error)
 			}
 			cursor += 4
 			return nil, cursor, nil
+		case '"':
+			start := cursor + 1
+			cursor++
+			for numTable[char(b, cursor)] || (cursor == start && char(b, cursor) == '-') {
+				cursor++
+			}
+			if char(b, cursor) != '"' {
+				return nil, 0, d.typeError([]byte{char(b, cursor)}, cursor)
+			}
+			num := buf[start:cursor]
+			cursor++
+			return num, cursor, nil
 		default:
 			return nil, 0, d.typeError([]byte{char(b, cursor)}, cursor)
 		}

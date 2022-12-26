@@ -8,15 +8,25 @@ import (
 
 type Example struct {
 	FieldName string
+	IntField  uint32
 	Slice     []string
 }
 
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
-	val := &Example{FieldName: "111", Slice: nil}
+	val := &Example{FieldName: "111", Slice: nil, IntField: 2}
 	bs, err := json.Marshal(val)
-	fmt.Println("out is", string(bs), err) // out is {"fieldName":"111","slice":[]}
+	checkError(err)
+	fmt.Println("out is", string(bs), err) // out is {"fieldName":"111","intField":2,"slice":[]}
 
 	val2 := &Example{}
-	json.Unmarshal(bs, val2)
-	fmt.Println("data is", val2) // data is &{111 []}
+	bs = []byte(`{"field_name":"111","intField":"22"}`)
+	err = json.Unmarshal(bs, val2)
+	checkError(err)
+	fmt.Printf("data is %+v\n", val2) // data is &{FieldName:111 IntField:22 Slice:[]}
 }
