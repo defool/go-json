@@ -294,6 +294,9 @@ func decodeKeyByBitmapUint16(d *structDecoder, buf []byte, cursor int64) (int64,
 			for {
 				c := char(b, cursor)
 				switch c {
+				case '_': // support snake_case
+					cursor++
+					continue
 				case '"':
 					fieldSetIndex := bits.TrailingZeros16(curBit)
 					field := d.sortedFieldSets[fieldSetIndex]

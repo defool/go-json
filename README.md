@@ -37,6 +37,9 @@ func main() {
 
 	val2 := &Example{}
 	bs = []byte(`{"field_name":"111","intField":"22"}`)
+
+	// buf := bytes.NewBuffer(bs)
+	// err = json.NewDecoder(buf).Decode(val2) // unsupported now
 	err = json.Unmarshal(bs, val2)
 	checkError(err)
 	fmt.Printf("data is %+v\n", val2) // data is &{FieldName:111 IntField:22 Slice:[]}
