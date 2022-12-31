@@ -4,8 +4,13 @@ This is a temporary library forked from [go-json](https://github.com/goccy/go-js
 ## Compatible Feature
 
 - Support both camelCase and snake_case in default JSON tag 
-- Encoding nil slice from `null` to `[]`.
-- Auto parse string to number.
+- Encoding nil slice from `null` to `[]`
+- Auto parse string to number
+
+## Known Issue
+
+- Unsupport Stream Decode/Encode
+- Marshal int64 to integer instand of string.
 
 ## Example
 ```
