@@ -47,7 +47,7 @@ var (
 
 func (d *intDecoder) parseInt(b []byte) (int64, error) {
 	isNegative := false
-	if b[0] == '-' {
+	if len(b) > 0 && b[0] == '-' {
 		b = b[1:]
 		isNegative = true
 	}
